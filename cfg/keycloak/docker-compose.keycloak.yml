@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  incharge-keycloak:
+    container_name: incharge-keycloak
+    image: jboss/keycloak:15.0.1
+    volumes:
+      - ../env/inCharge_realm_export.json:/tmp/inCharge_realm_export.json
+    ports:
+      - 8888:8080
+    env_file:
+      - ../env/keycloak.env
+  incharge-keycloak-postgress:
+    container_name: incharge-keycloak-postgres
+    image: postgres:latest
+    env_file:
+      - ../env/keycloakdb.env
+    ports:
+      - 5433:5432
+    volumes:
+      - ../volumes/keycloak/data:/var/lib/postgres/data
